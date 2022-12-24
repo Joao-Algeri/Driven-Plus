@@ -8,7 +8,6 @@ export default function Login() {
   const navigate = useNavigate();
   function SendForm(e) {
     e.preventDefault();
-    console.log(form)
     LoggingIn()
   }
   function LoggingIn() {
@@ -18,7 +17,8 @@ export default function Login() {
   }
   function HandleSucess(request) {
     if (request.membership == null) {
-      navigate("/subscriptions")
+      console.log(request)
+      navigate(`/subscriptions/${request.data.id}`)
     }
     else {
       navigate("/home")
@@ -26,17 +26,19 @@ export default function Login() {
 
   }
   function HandleError() {
-        alert("Ocorreu um problema, tente mais tarde")
+    alert("Ocorreu um problema, tente mais tarde")
   }
   return (
     <Content>
       <img src={Logo} alt="Logo" />
       <form onSubmit={SendForm}>
-        <input required placeholder="E-mail" type={"email"} name="email" value={form.email} onChange={handleForm} />
-        <input required placeholder="Senha" type={"password"} name="password" value={form.password} onChange={handleForm} />
+        <input required placeholder="E-mail" type={"email"} name="email" value={form.email || ""} onChange={handleForm} />
+        <input required placeholder="Senha" type={"password"} name="password" value={form.password || ""} onChange={handleForm} />
         <button>ENTRAR</button>
       </form>
-      <Link to="/sign-up" className="link">Não possui uma conta? Cadastre-se</Link>
+      <Link to="/sign-up">
+        <div className="link"> Não possui uma conta? Cadastre-se</div>
+      </Link>
     </Content>
   )
 }
@@ -63,8 +65,8 @@ input{
   margin-bottom:16px;
   border-radius: 8px;
   border:none;
-  
-  }
+  padding-left: 14px;
+    }   
 button{
   height: 52px;
   border-radius: 8px;
@@ -78,13 +80,16 @@ button{
   }
 
 .link{
+  display: flex;
   width: 60vw;
-  
+  justify-content: center;
+  align-items: center;
   margin-left: 20vw;
   margin-right: 20vw;
   font-size: 14px;
   font-weight: 400;
   color:white;
+  text-decoration:underline;
 }
 `
 
