@@ -1,10 +1,13 @@
 import styled from "styled-components";
 import axios from "axios";
 import Logo from "../Imgs/Logo.png"
+import {useContext, useState} from 'react';
+import UserContext from "../Contexts/UserContext";
 import { Link, useNavigate } from "react-router-dom";
 import { UseForm } from "./Useform";
 export default function Login() {
   const [form, handleForm] = UseForm({})
+  const {user,setUser}=useContext(UserContext)
   const navigate = useNavigate();
   function SendForm(e) {
     e.preventDefault();
@@ -17,8 +20,12 @@ export default function Login() {
   }
   function HandleSucess(request) {
     if (request.membership == null) {
-      console.log(request)
-      navigate(`/subscriptions/${request.data.id}`)
+      // console.log(request)     
+      // console.log(request.data.token);
+      
+      setUser(request.data);      
+      navigate("/subscriptions/")
+      
     }
     else {
       navigate("/home")
@@ -28,6 +35,7 @@ export default function Login() {
   function HandleError() {
     alert("Ocorreu um problema, tente mais tarde")
   }
+  
   return (
     <Content>
       <img src={Logo} alt="Logo" />
