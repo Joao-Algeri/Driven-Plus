@@ -9,8 +9,8 @@ export default function Login() {
   const [form, handleForm] = UseForm({})
   const {user,setUser}=useContext(UserContext)
   const navigate = useNavigate();
-  function SendForm(e) {
-    e.preventDefault();
+  function SendForm(event) {
+    event.preventDefault();
     LoggingIn()
   }
   function LoggingIn() {
@@ -19,23 +19,20 @@ export default function Login() {
     promise.catch(HandleError)
   }
   function HandleSucess(request) {
-    if (request.membership == null) {
-      // console.log(request)     
-      // console.log(request.data.token);
+    if (request.membership == null) {   
+      const userData={name:request.data.name,token:request.data.token,image:"",perks:{}}
       
-      setUser(request.data);      
-      navigate("/subscriptions/")
+      setUser(userData);    
       
+      navigate("/subscriptions/")      
     }
     else {
       navigate("/home")
     }
-
   }
   function HandleError() {
     alert("Ocorreu um problema, tente mais tarde")
-  }
-  
+  }  
   return (
     <Content>
       <img src={Logo} alt="Logo" />
