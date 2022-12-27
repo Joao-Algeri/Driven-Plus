@@ -18,15 +18,17 @@ export default function Login() {
     promise.then(HandleSucess)
     promise.catch(HandleError)
   }
-  function HandleSucess(request) {
-    if (request.membership == null) {   
-      const userData={name:request.data.name,token:request.data.token,image:"",perks:{}}
+  function HandleSucess(request) {    
+    if (request.data.membership === null) {   
+      const userData={name:request.data.name,token:request.data.token,image:"",perks:{},cardInfo:{}}
       
       setUser(userData);    
       
       navigate("/subscriptions/")      
     }
     else {
+      const userData={name:request.data.name,token:request.data.token,image:request.data.membership.image,perks:request.data.membership.perks,cardInfo:{}}
+      setUser(userData);  
       navigate("/home")
     }
   }

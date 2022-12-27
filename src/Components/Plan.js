@@ -15,7 +15,7 @@ export default function Plan({ token }) {
   const navigate = useNavigate();
 
   const config = { headers: { Authorization: `Bearer ${user.token}` } }
-
+  
   useEffect(() => {
     const promise = axios.get(`https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions/memberships/${ID_DO_PLANO}`, config)
     promise.then(Sucess)
@@ -37,6 +37,7 @@ export default function Plan({ token }) {
     form.securityNumber = Number(form.securityNumber);
     form.cardNumber = form.cardNumber
     const body = { membershipId: planData.id, ...form };
+     
 
     const promise = axios.post("https://mock-api.driven.com.br/api/v4/driven-plus/subscriptions", body, config)
     promise.then(HandleSucess);
@@ -46,10 +47,12 @@ export default function Plan({ token }) {
 
   }
   function HandleSucess(request) {
+    const body = { membershipId: planData.id, ...form };
     const newUser = { ...user }
-    newUser.image = request.data.membership.image
-    newUser.perks = request.data.membership.perks
-    setUser(newUser)
+    newUser.image = request.data.membership.image;
+    newUser.perks = request.data.membership.perks;
+    newUser.cardInfo = {...body}    
+    setUser(newUser);
     navigate("/home")
   }
   function HandleFailure() {
@@ -64,7 +67,7 @@ export default function Plan({ token }) {
         <div>Benefícios:</div>
       </div>
       <div className="perks-box">
-        {perks.map((perk, index) => <div className="perk" key={perk.id}>{index + 1}. {perk.title}</div>)}
+        {perks.map((perk, index) => <div className="perk" key={perk.id*55}>{index + 1}. {perk.title}</div>)}
       </div>
       <div className="title-box">
         <img className="icon" src={moneybill} alt="moneybill" />

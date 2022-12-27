@@ -32,7 +32,7 @@ export default function Subscriptions() {
     <Content>
       <div className="title">Escolha seu Plano</div>
       {plans.map((plan) =>
-        <div onClick={() => ShowPlan(plan.id)} key={plan.id} className="plan">
+        <div onClick={() => ShowPlan(plan.id)} key={plan.id*100} className="plan">
           <img key={plan.image} src={plan.image} alt="plan icon" />
           <div key={plan.price} className="price">R$ {plan.price}</div>
         </div>
