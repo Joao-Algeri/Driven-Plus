@@ -3,6 +3,7 @@ import axios from "axios";
 import { useEffect, useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { UseForm } from "./Useform";
+import Arrow from "../Imgs/Arrow.png"
 import UserContext from "../Contexts/UserContext";
 import checklist from "../Imgs/Checklist.png"
 import moneybill from "../Imgs/Moneybill.png"
@@ -60,6 +61,7 @@ export default function Plan({ token }) {
   }
   return (
     <Content>
+      <img className="arrow" onClick={()=>navigate("/subscriptions")} src={Arrow} alt="Arrow"/>
       <img className="logo" src={planData.image} />
       <div className="title">{planData.name}</div>
       <div className="title-box">
@@ -167,6 +169,11 @@ button{
   justify-content: center;
   height: 52px;
   border-radius: 8px;
+}
+.arrow{
+  position:fixed;
+  top:22px;
+  left:22px;
 }
 `
 
